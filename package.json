@@ -11,10 +11,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "1.1.2",
+    "axios": "0.17.1",
     "element-ui": "2.0.11",
     "glob": "7.1.2",
+    "localforage": "1.5.5",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

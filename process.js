@@ -1,58 +1,75 @@
-
 const fs = require('fs')
 const path = require('path')
 const titles = require('./assets/titles.json')
+const uuid = require('uuid/v4')
 
 fs.readFile('./assets/gre.txt', (err, data) => {
   if (err) {
     console.log(err)
-    return 
+    return
   }
 
-  const filter = (ctx => ctx.replace(/\s/, '').length > 10)
+  const filter = ctx => ctx.replace(/\s/, '').length > 10
 
-  const parseQuestions = (question) => {
-    const matches = question.split(/^\(?[A-G]\)? ?\.?/mg);
-    if (!matches) return "{}"
+  const parseQuestions = question => {
+    const matches = question.split(/^\(?[A-G]\)? ?\.?/gm)
+    if (!matches) return '{}'
 
     return {
       subject: matches[0],
       options: matches.slice(1)
     }
   }
-  
-  const parsePaggage = (passage, uindex, pindex) => {
-    // return passage;
-    const matches = passage.split(/^\d+\./mg);
 
-    if (!matches) return "{}"
+  const parsePaggage = (passage, uindex, pindex) => {
+    const matches = passage.split(/^\d+\./gm)
+
+    if (!matches) return '{}'
 
     return {
+      id: `ilvyr00${uindex+1}00${pindex+1}`,
       title: titles[uindex].passages[pindex],
-      passage: matches[0],
+      content: matches[0].split(/\n\n/).filter(filter),
       questions: matches.slice(1).map(m => parseQuestions(m))
     }
   }
 
-
-  const f = data.toString()
-  const units = f.split(/Unit \d/g).filter(filter).map((unit, uindex) => {
-
-    const dir = `assets/passages/unit${uindex+1}`
-
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir)
-    
-    return unit.split(/Passage \d/g).filter(filter).map((passage, pindex) => {
-      const file = fs.openSync(path.join(dir, `passage${pindex+1}.json`), 'w+')
-      const json = parsePaggage(passage, uindex, pindex)
-      fs.writeSync(file, JSON.stringify(json))
-      fs.closeSync(file)
-
-      return json.title
-    })
-  })
-
-  console.log(units)
+  const dir = `assets`
   
+  const f = data.toString()
+  const units = f
+    .split(/Unit \d/g)
+    .filter(filter)
+    .map((unit, uindex) => {
 
+      const p = path.join(dir, "passages")
+      if (!fs.existsSync(p)) fs.mkdirSync(p)
+
+      const passages = unit
+        .split(/Passage \d{1,3}/g)
+        .filter(filter)
+        .map((passage, pindex) => {
+          const json = parsePaggage(passage, uindex, pindex)
+          const file = fs.openSync(
+            path.join(dir, `passages/${json.id}.json`),
+            'w+'
+          )
+          fs.writeSync(file, JSON.stringify(json))
+          fs.closeSync(file)
+
+          return {
+            title: json.title,
+            id: json.id
+          }
+        })
+
+      return {
+        unit: titles[uindex].unit,
+        passages
+      }
+    })
+
+  const file = fs.openSync(path.join(dir, `catalog.json`), 'w+')
+  fs.writeSync(file, JSON.stringify(units))
+  fs.closeSync(file)
 })

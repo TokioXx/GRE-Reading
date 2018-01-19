@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Panel from '@/components/Panel'
+import Catalog from './Catalog'
+import Test from './Test'
 
 Vue.use(Router)
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Panel',
-      component: Panel
+      name: 'Catalog',
+      component: Catalog
+    },
+    {
+      path: '/tests/:id',
+      name: 'Test',
+      component: Test
     }
   ]
 })
