@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 import * as passage from './modules/passage'
 import * as config from './modules/config'
+import * as score from './modules/score'
 import { STORAGE_KEY } from './types'
 import localforage from 'localforage'
 
@@ -22,7 +23,8 @@ const recorder = store => {
 export default new Vuex.Store({
   modules: {
     passage,
-    config
+    config,
+    score
   },
   strict: debug,
   plugins: debug ? [createLogger(), recorder] : [recorder]

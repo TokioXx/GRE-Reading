@@ -23,7 +23,7 @@
 import { Tree, Container, Aside, Main, Header, Button } from 'element-ui'
 import Passage from '../components/Passage'
 import Empty from '../components/Empty'
-import catalog from '../../assets/catalog.json'
+import catalog from '../../static/catalog.json'
 import Config from '../components/Config'
 import { PASSAGE_ACTIVE, CONFIG_TITLE_VISIBLE } from '../store/types.js'
 
@@ -44,7 +44,7 @@ export default {
       const st = this.showTitle
       return catalog.map((unit, index) => {
         const children = unit.passages.map(({ title, id }, i) => ({
-          label: `Passage ${i + 1}` + (st ? title : ''),
+          label: `Passage ${i + 1} ` + (st ? title : ''),
           id
         }))
 
@@ -109,7 +109,7 @@ export default {
   background: rgba(0,0,0,.07);
 
 .test
-  position: absolute
+  position: fixed
   bottom: 60px
   right: 60px
 

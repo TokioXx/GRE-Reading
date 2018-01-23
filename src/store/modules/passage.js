@@ -17,16 +17,18 @@ const mutations = {
 
 // const namespace = true
 const actions = {
-  [types.ACTION_PASSAGE_FETCH] ({ commit }, { id }) {
+  [types.ACTION_PASSAGE_FETCH] ({ commit, passage }, { id }) {
+    if (state.passages[id]) { return }
+
     const debug = process.env.NODE_ENV !== 'production'
     if (debug) {
-      const data = require(`../../../assets/passages/${id}.json`)
+      const data = require(`../../../static/passages/${id}.json`)
       commit(types.PASSAGE_SET, data)
       return
     }
-    axios(`/gre/assets/passages/${id}.json`)
+    axios(`/gre/static/passages/${id}.json`)
       .then((data) => {
-        commit(types.PASSAGE_SET, data)
+        commit(types.PASSAGE_SET, data.data)
       })
       .catch((error) => {
         console.log(error)

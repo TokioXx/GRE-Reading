@@ -1,7 +1,7 @@
 <template>
   <div>
       <Passage :id="id" class="passage"></Passage>
-      <Question :id="id"></Question>
+      <Questions :id="id"></Questions>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 
 import { Container, Main } from 'element-ui'
 import Passage from '../components/Passage'
-import Question from '../components/Question'
+import Questions from '../components/Questions'
 
 export default {
   computed: {
@@ -17,7 +17,7 @@ export default {
       return this.$route.params.id
     }
   },
-  components: { Container, Main, Passage, Question }
+  components: { Container, Main, Passage, Questions }
 }
 
 </script>
