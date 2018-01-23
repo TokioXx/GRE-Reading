@@ -1,21 +1,12 @@
-# gre
+## 阅读白皮书在线做题网站源码
 
-> A Vue.js project
+琦书的阅读白皮书是一本GRE阅读的好书，但是原文资料阅读起来不是很好用，所以撸了一个在线做题的网站。
 
-## Build Setup
+#### 截图
+![首页](./assets/1.png)
+![答题](./assets/1.png)
+![核对](./assets/1.png)
 
-``` bash
-# install dependencies
-npm install
+#### [立即体验](https://baipishu.cainiao.io/#/) 
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+感谢 [菜鸟](https://cainiao.io) 提供域名和空间。
